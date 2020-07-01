@@ -66,9 +66,8 @@ var insertData = {
                     else if(del.includes(i)) {
                         text += ("<span class='red'>"+response.result.charAt(i)+"</span>");
                     }
-                    else if(eq.includes(i)){
+                    else {
                          text += ("<span class=''>"+response.result.charAt(i)+"</span>");
-                    }else{
                     }
                     $("#compare-result").append(text);
                     }
