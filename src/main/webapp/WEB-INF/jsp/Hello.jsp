@@ -68,14 +68,21 @@
         <div class="col-md-10 hide" id="qr-main1">
             <p>Text Difference Checker lets you compare text files, documents, binary files, and archives</p>
             <div class="col-md-6 ">
-                <textarea class="form-control" rows="5" placeholder="Enter or paste text here."></textarea>
+                <textarea id="left" class="form-control" rows="5" placeholder="Enter or paste text here."></textarea>
             </div>
             <div class="col-md-6 ">
-                <textarea class="form-control" rows="5" placeholder="Enter or paste text here."></textarea>
+                <textarea id="right" class="form-control" rows="5" placeholder="Enter or paste text here."></textarea>
             </div>
             <div class="row">
                 <div class="col-md-12 text-center" id="text-compare">
-                    <button class="btn btn-success" >Compare </button>
+                    <button type="button" class="btn btn-success" id="compare-text" >Compare </button>
+                    <button type="button" class="btn btn-danger hide" id="compare-text-reset" >Reset </button>
+                </div>
+            </div>
+    
+            <div class="row well hide" id="compare-res">
+                <div class="col-md-12 text-center" >
+                    <h3 id="compare-result"></h3>
                 </div>
             </div>
         </div>

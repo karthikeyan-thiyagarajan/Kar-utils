@@ -4,13 +4,11 @@ import com.karthikeyan.CompareResponses;
 import com.karthikeyan.request.CompareRequest;
 import com.karthikeyan.service.DiffMatchPatch;
 import com.karthikeyan.service.DiffMatchPatch.Diff;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -43,13 +41,15 @@ public class UtilsController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(encode);
     }
 
-    @GetMapping("/compare")
+    @PostMapping("/compare")
     public ResponseEntity<CompareResponses> sdfsfdds(@RequestBody CompareRequest req) {
         DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
         LinkedList<Diff> diffs = diffMatchPatch.diff_main(req.getA(), req.getB());
-        System.out.println("s1 = " + diffs);
         CompareResponses aggregate = diffMatchPatch.aggregate(diffs);
         System.out.println(aggregate);
         return ResponseEntity.ok().body(aggregate);
     }
+
 }
+
+

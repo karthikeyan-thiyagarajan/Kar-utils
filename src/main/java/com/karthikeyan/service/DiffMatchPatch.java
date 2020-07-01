@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class DiffMatchPatch {
 
@@ -57,6 +58,9 @@ public class DiffMatchPatch {
      * Chunk size for context length.
      */
     public short Patch_Margin = 4;
+
+    public String updatedStringA;
+    public String updatedStringB;
 
     /**
      * Unescape selected chars for compatability with JavaScript's encodeURI.
@@ -147,7 +151,8 @@ public class DiffMatchPatch {
         }
 
         // Trim off common prefix (speedup).
-        int commonlength = diff_commonPrefix(text1, text2);
+        int commonlength;
+        commonlength = diff_commonPrefix(text1, text2);
         String commonprefix = text1.substring(0, commonlength);
         text1 = text1.substring(commonlength);
         text2 = text2.substring(commonlength);
@@ -157,6 +162,8 @@ public class DiffMatchPatch {
         String commonsuffix = text1.substring(text1.length() - commonlength);
         text1 = text1.substring(0, text1.length() - commonlength);
         text2 = text2.substring(0, text2.length() - commonlength);
+        updatedStringA = text1;
+        updatedStringB = text2;
 
         // Compute the diff on the middle block.
         diffs = diff_compute(text1, text2, checklines, deadline);
@@ -2308,17 +2315,39 @@ public class DiffMatchPatch {
         return patches;
     }
 
-    public CompareResponses aggregate(LinkedList<Diff> a) {
+    public CompareResponses aggregate(LinkedList<Diff> list) {
+        System.out.println("list = " + list);
         CompareResponses responses = new CompareResponses();
-        for (Diff aa : a) {
+        int index = 0;
+        for (int i = 0; i < list.size(); i++) {
+            Diff aa = list.get(i);
+            responses.setResult(aa.getText());
             if (aa.getOperation().equals(Operation.INSERT)) {
+                if(aa.getText().length()>=1){
+                    for(int j=0;j<aa.getText().length();j++){
+                        responses.addInsertIndex(index++);
+                    }
+                }
                 responses.addInsert(aa.getText());
             } else if (aa.getOperation().equals(Operation.DELETE)) {
+                if(aa.getText().length()>=1){
+                    for(int j=0;j<aa.getText().length();j++){
+                        responses.addDeleteIndex(index++);
+                    }
+                }
                 responses.addDelete(aa.getText());
+            }else{
+                if(aa.getText().length()>=1){
+                    for(int j=0;j<aa.getText().length();j++){
+                        responses.addEqualIndex(index++);
+                    }
+                }
             }
+
         }
         return responses;
     }
+
 
     /**
      * The data structure representing a diff is a Linked list of Diff objects:
@@ -2400,7 +2429,7 @@ public class DiffMatchPatch {
             } else if (this.operation.toString().equals("DELETE")) {
                 return "delete-" + prettyText;
             } else {
-                return "No Differences";
+                return "equal-" + prettyText;
             }
 //            return "Diff(" + this.operation + ",\"" + prettyText + "\")";
         }
