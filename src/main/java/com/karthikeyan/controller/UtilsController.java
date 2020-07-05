@@ -4,16 +4,23 @@ import com.karthikeyan.CompareResponses;
 import com.karthikeyan.request.CompareRequest;
 import com.karthikeyan.service.DiffMatchPatch;
 import com.karthikeyan.service.DiffMatchPatch.Diff;
-import org.junit.Test;
+import com.karthikeyan.service.PdfToTextConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.LinkedList;
 
@@ -27,6 +34,8 @@ public class UtilsController {
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private PdfToTextConverterService converterService;
 
     @GetMapping("/qr/{content}")
     public ResponseEntity<byte[]> qrScanner(@PathVariable String content) {
@@ -49,6 +58,25 @@ public class UtilsController {
         System.out.println(aggregate);
         return ResponseEntity.ok().body(aggregate);
     }
+
+    @PostMapping("/pdf-text")
+    public ResponseEntity<String> pdfToText(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+
+        if (multipartFile.isEmpty()) {
+            return ResponseEntity.ok().body("Please select a multipartFile to upload");
+        }
+        byte[] bytes = multipartFile.getBytes();
+        Path path = Paths.get(multipartFile.getOriginalFilename());
+        File write = Files.write(path, bytes).toFile();
+        String text = converterService.pdfToText(write);
+        if (write.delete()) {
+            System.out.println("deleted");
+        } else {
+            System.out.println("not deleted");
+        }
+        return ResponseEntity.ok().body(text);
+    }
+
 
 }
 

@@ -5,8 +5,8 @@ $( document ).ready(function() {
          $('.tiles').each(function () {
              idArray.push(this.id);
          });
-    var ids= ["qr-main","qr-main1"];
-    var headings= ["QR Code Generator","Text Difference Checker"];
+    var ids= ["qr-main","qr-main1","qr-main2"];
+    var headings= ["QR Code Generator","Text Difference Checker","PDF to Text Converter"];
        for (var i = 0; i < idArray.length; i++) {
             if(idArray[i] === this.id){
                 $("#"+ids[i]+"").removeClass("hide");
@@ -18,7 +18,13 @@ $( document ).ready(function() {
             }
        }
  });
-});
+
+ $("#download-content").click(function(e){
+     var file = window.btoa($("#result-pdf").val());
+     $(this).attr("href","data:application/octet-stream;charset=utf-8;base64,"+file);
+     $(this).attr("download",$(".custom-file-label").text().replace("Uploaded File : ","Converted-"));
+ });
+
 $("#button-addon2").click(function(e){
 var $btn = $(this).button('loading')
 var name =  $('#qr-data').val() != "" ? $('#qr-data').val() : "empty";
@@ -91,4 +97,48 @@ $("#compare-text-reset").click(function(e){
        $('#compare-res').addClass("hide");
        $("#compare-text-reset").addClass("hide")
        $("#compare-text").removeClass("hide");
+});
+
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html("Uploaded File : "+fileName);
+  $("#pdf-parse").removeClass("hide");
+});
+
+
+$("#pdf-parse").click(function(e){
+var $btn = $(this).button('loading')
+var file =  $('.custom-file-input').val();
+var fd = new FormData();
+
+var file_data = $('input[type="file"]')[0].files; // for multiple files
+for(var i = 0;i<file_data.length;i++){
+    fd.append("file", file_data[i]);
+}
+var other_data = $('form').serializeArray();
+$.each(other_data,function(key,input){
+    fd.append(input.name,input.value);
+});
+
+  $.ajax({
+  	    type: 'POST',
+  	    url: "/pdf-text",
+        contentType: false,
+        processData: false,
+        data: fd,
+  	    success: function(response) {
+//            console.log(response);
+
+        $("#result-pdf").append(response);
+        $("#result-pdf").removeClass("hide");
+        $("#download-content").removeClass("hide");
+            $btn.button('reset')
+         },
+        error: function(response) {
+            console.log(response);
+        }
+  	});
+});
+
+
 });

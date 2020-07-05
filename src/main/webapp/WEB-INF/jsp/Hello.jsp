@@ -10,7 +10,7 @@
 <nav class="navbar navbar-inverse ">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" target="_blank"
+            <a class="navbar-brand" target="_blank" title="Karthikeyan Thiyagarajan"
                href="https://github.com/karthikeyan-thiyagarajan"><kbd>Kar-Utils</kbd></a>
         </div>
         <ul class="nav navbar-nav">
@@ -27,7 +27,7 @@
         <!--<div class="col-md-12 well">
             <h2 class="text-center text-primary">Kar-Utils</h2>
         </div>-->
-        <h3 class="sub-heading text-center" >QR Code Generator</h3>
+        <h3 class="sub-heading text-center">QR Code Generator</h3>
     </div>
     
     <div class="row">
@@ -37,11 +37,11 @@
                         class="glyphicon glyphicon-qrcode"></span> &nbsp; QR code</a></li>
                 <li id="2qr2"><a id="qr2" class="tiles" href="#"><span class="glyphicon glyphicon-transfer"></span>
                     &nbsp; Text compare</a></li>
-                <li id="3qr3"><a id="qr3" class="tiles" href="#"><span class="glyphicon glyphicon-home"></span>
-                    &nbsp; Users</a></li>
+                <li id="3qr3"><a id="qr3" class="tiles" href="#"><span class="glyphicon glyphicon-th"></span>
+                    &nbsp; PDF Parser</a></li>
                 <li id="4qr4"><a id="qr4" class="tiles" href="#"><span class="glyphicon glyphicon-home"></span>
                     &nbsp; Login</a></li>
-                <li id="5qr5"><a id="qr5" class="tiles" href="#"><span class="glyphicon glyphicon-home"></span>
+                <li id="5qr5"><a id="qr5" class="tiles" href="https://github.com/karthikeyan-thiyagarajan"><span class="glyphicon glyphicon-user"></span>
                     &nbsp; about</a></li>
             </ul>
         </div>
@@ -64,7 +64,7 @@
                 <img id="qr-image" src="">
             </div>
         </div>
-        <!--2nd -FRAME-->
+        <!--Text compare -FRAME-->
         <div class="col-md-10 hide" id="qr-main1">
             <p>Text Difference Checker lets you compare text files, documents, binary files, and archives</p>
             <div class="col-md-6 ">
@@ -75,15 +75,37 @@
             </div>
             <div class="row">
                 <div class="col-md-12 text-center" id="text-compare">
-                    <button type="button" class="btn btn-success" id="compare-text" >Compare </button>
-                    <button type="button" class="btn btn-danger hide" id="compare-text-reset" >Reset </button>
+                    <button type="button" class="btn btn-success" id="compare-text">Compare</button>
+                    <button type="button" class="btn btn-danger hide" id="compare-text-reset">Reset</button>
                 </div>
             </div>
-    
+            
             <div class="row well hide" id="compare-res">
-                <div class="col-md-12 text-center" >
+                <div class="col-md-12 text-center">
                     <h3 id="compare-result"></h3>
                 </div>
+            </div>
+        </div>
+        
+        <!--PDF TO TEXT -FRAME-->
+        <div class="col-md-10 hide" id="qr-main2">
+            <p>PDF to text converter to extract text data from PDF/Docs/Txt files</p>
+            <div class="col-md-6 well">
+                <form>
+                    <div class="custom-file">
+                        <label class="custom-file-label btn btn-outline" for="customFile">Upload file</label>
+                        <input type="file" class="custom-file-input hidden" id="customFile">
+                    </div>
+                </form>
+                <div>
+                    <button type="button" class="btn btn-warning hide" id="pdf-parse" data-loading-text="Parsing..."> Parse </button>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <textarea id="result-pdf" class="form-control hide" rows="6"></textarea>
+            </div>
+            <div class="row">
+                <a id="download-content" class="hide btn btn-success" href=""><span class="glyphicon glyphicon-download-alt"></span>&nbsp; Download</a>
             </div>
         </div>
     </div>
