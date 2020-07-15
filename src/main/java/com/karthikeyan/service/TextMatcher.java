@@ -32,4 +32,6 @@ public class TextMatcher {
         return matchProcessing(preProcessing(src), preProcessing(target));
     }
 
+    private TextMatcher() {
+    }
 }

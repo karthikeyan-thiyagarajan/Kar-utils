@@ -18,17 +18,12 @@ public class WebController {
         return "redirect:/login";
     }
 
-   /* @GetMapping("/login")
-    public String getAuth() {
-        return "index";
-    }*/
-
     @GetMapping("/dash")
     public String getHomePage() {
         return "Dashboard";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping(value = "/login")
     public String login(Model model, String error, String logout) {
         if (error != null)
             model.addAttribute("errorMsg", "Your username and password are invalid.");

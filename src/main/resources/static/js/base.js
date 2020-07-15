@@ -63,7 +63,6 @@ var insertData = {
             var i;
                 var ins = response.insertIndex;
                 var del = response.deleteIndex;
-                var eq = response.deleteIndex;
                 for (i = 0; i < response.result.length; i++) {
                 var text ='';
                     if(ins.includes(i)) {
@@ -108,7 +107,6 @@ $(".custom-file-input").on("change", function() {
 
 $("#pdf-parse").click(function(e){
 var $btn = $(this).button('loading')
-var file =  $('.custom-file-input').val();
 var fd = new FormData();
 
 var file_data = $('input[type="file"]')[0].files; // for multiple files

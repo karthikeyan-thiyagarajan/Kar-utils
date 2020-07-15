@@ -12,7 +12,6 @@ import java.net.URLEncoder;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 public class DiffMatchPatch {
 
@@ -2323,22 +2322,22 @@ public class DiffMatchPatch {
             Diff aa = list.get(i);
             responses.setResult(aa.getText());
             if (aa.getOperation().equals(Operation.INSERT)) {
-                if(aa.getText().length()>=1){
-                    for(int j=0;j<aa.getText().length();j++){
+                if (aa.getText().length() >= 1) {
+                    for (int j = 0; j < aa.getText().length(); j++) {
                         responses.addInsertIndex(index++);
                     }
                 }
                 responses.addInsert(aa.getText());
             } else if (aa.getOperation().equals(Operation.DELETE)) {
-                if(aa.getText().length()>=1){
-                    for(int j=0;j<aa.getText().length();j++){
+                if (aa.getText().length() >= 1) {
+                    for (int j = 0; j < aa.getText().length(); j++) {
                         responses.addDeleteIndex(index++);
                     }
                 }
                 responses.addDelete(aa.getText());
-            }else{
-                if(aa.getText().length()>=1){
-                    for(int j=0;j<aa.getText().length();j++){
+            } else {
+                if (aa.getText().length() >= 1) {
+                    for (int j = 0; j < aa.getText().length(); j++) {
                         responses.addEqualIndex(index++);
                     }
                 }
