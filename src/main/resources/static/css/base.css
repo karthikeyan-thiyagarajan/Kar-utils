@@ -14,7 +14,7 @@
     margin:20px;
 }
 
-#qr-main,#qr-main1,,#qr-main2 {
+#qr-main,#qr-main1,#qr-main2,#qr-main3{
     padding: 20px;
 }
 body{
@@ -39,7 +39,7 @@ p {
      color: #ffffff !important;
 }
 
-#text-compare{
+#text-compare,#text-match{
     margin:50px;
     margin-left: 1px;
 }
@@ -66,4 +66,10 @@ p {
     color: #fff !important;
     background-color: #563d7c;
     border-color: #563d7c;
+}
+.navbar-inverse {
+    background-color: #31273a !important;
+}
+.logout{
+    float: right;
 }

@@ -5,8 +5,8 @@ $( document ).ready(function() {
          $('.tiles').each(function () {
              idArray.push(this.id);
          });
-    var ids= ["qr-main","qr-main1","qr-main2"];
-    var headings= ["QR Code Generator","Text Difference Checker","PDF to Text Converter"];
+    var ids= ["qr-main","qr-main1","qr-main2","qr-main3"];
+    var headings= ["QR Code Generator","Text Difference Checker","PDF to Text Converter","Text Matcher"];
        for (var i = 0; i < idArray.length; i++) {
             if(idArray[i] === this.id){
                 $("#"+ids[i]+"").removeClass("hide");
@@ -140,5 +140,43 @@ $.each(other_data,function(key,input){
   	});
 });
 
+$("#match-text").click(function(e){
+var insertData = {
+        'a': $('#match-left').val() ,
+        'b': $('#match-right').val() ,
+    };
+  $.ajax({
+  	    type: 'POST',
+  	    headers: {
+          	        'Content-Type': 'application/json'
+          	    },
+  	    url: "/match",
+  	    data: JSON.stringify(insertData),
+  	    success: function(response) {
+  	    console.log(response);
+  	     $('#match-res').removeClass("hide");
+                    $("#match-text-reset").removeClass("hide");
+                    $("#match-text").addClass("hide");
+  	    if(response != 0){
+            $('#match-result').css("width", response+"%");
+            $('#match-result').text(response+"%");
+        }else {
+            $('#match-result').css("color", "black");
+            $('#match-result').css("width", response+"%");
+            $('#match-result').text(response+"%");
+         }
+         },
+        error: function(response) {
+            console.log(response);
+        }
+  	});
+});
+$("#match-text-reset").click(function(e){
+      $('#match-left').val("");
+       $('#match-right').val("");
+       $('#match-res').addClass("hide");
+       $("#match-text-reset").addClass("hide")
+       $("#match-text").removeClass("hide");
+});
 
 });

@@ -5,13 +5,13 @@ import com.karthikeyan.request.CompareRequest;
 import com.karthikeyan.service.DiffMatchPatch;
 import com.karthikeyan.service.DiffMatchPatch.Diff;
 import com.karthikeyan.service.PdfToTextConverterService;
+import com.karthikeyan.service.TextMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,12 +51,19 @@ public class UtilsController {
     }
 
     @PostMapping("/compare")
-    public ResponseEntity<CompareResponses> sdfsfdds(@RequestBody CompareRequest req) {
+    public ResponseEntity<CompareResponses> getComaparision(@RequestBody CompareRequest req) {
         DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
         LinkedList<Diff> diffs = diffMatchPatch.diff_main(req.getA(), req.getB());
         CompareResponses aggregate = diffMatchPatch.aggregate(diffs);
         System.out.println(aggregate);
         return ResponseEntity.ok().body(aggregate);
+    }
+
+    @PostMapping("/match")
+    public ResponseEntity<Integer> getMatches(@RequestBody CompareRequest req) {
+        int resultPercent = TextMatcher.checkValues(req.getA(), req.getB());
+        System.out.println("resultPercent = " + resultPercent);
+        return ResponseEntity.ok().body(resultPercent);
     }
 
     @PostMapping("/pdf-text")
@@ -76,7 +83,6 @@ public class UtilsController {
         }
         return ResponseEntity.ok().body(text);
     }
-
 
 }
 
