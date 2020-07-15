@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>Kar-Utils</title>
     <meta charset="utf-8">
