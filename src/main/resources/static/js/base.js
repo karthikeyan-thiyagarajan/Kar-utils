@@ -22,7 +22,7 @@ $( document ).ready(function() {
  $("#download-content").click(function(e){
      var file = window.btoa($("#result-pdf").val());
      $(this).attr("href","data:application/octet-stream;charset=utf-8;base64,"+file);
-     $(this).attr("download",$(".custom-file-label").text().replace("Uploaded File : ","Converted-"));
+     $(this).attr("download",$(".custom-file-label").text().replace("Uploaded File : ","Converted-").replace("pdf","txt"));
  });
 
 $("#button-addon2").click(function(e){
