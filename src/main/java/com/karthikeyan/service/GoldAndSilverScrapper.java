@@ -19,9 +19,8 @@ import static com.karthikeyan.utils.HelperUtility.*;
 @Component
 public class GoldAndSilverScrapper {
 
-    @Scheduled(cron = "0 15 10 * * ?")
-    @Scheduled(cron = "0 30 15 * * ?")
-    @Scheduled(cron = "0 15 11 * * ?")
+    /*@Scheduled(cron = "0 15 10 * * ?")
+    @Scheduled(cron = "0 30 15 * * ?")*/
     public void job() {
         GoldAndSilverScrapper goldAndSilverScrapper = new GoldAndSilverScrapper();
         System.out.println("Triggered on " + new Date());
