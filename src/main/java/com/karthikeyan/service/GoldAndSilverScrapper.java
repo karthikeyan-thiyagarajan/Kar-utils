@@ -21,6 +21,7 @@ public class GoldAndSilverScrapper {
 
     @Scheduled(cron = "0 15 10 * * ?")
     @Scheduled(cron = "0 30 15 * * ?")
+    @Scheduled(cron = "0 15 11 * * ?")
     public void job() {
         GoldAndSilverScrapper goldAndSilverScrapper = new GoldAndSilverScrapper();
         System.out.println("Triggered on " + new Date());
