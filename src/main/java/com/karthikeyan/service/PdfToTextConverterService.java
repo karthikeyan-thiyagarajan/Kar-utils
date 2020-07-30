@@ -1,13 +1,22 @@
 package com.karthikeyan.service;
 
-import com.cloudmersive.client.ConvertDocumentApi;
-import com.cloudmersive.client.invoker.ApiClient;
-import com.cloudmersive.client.invoker.ApiException;
-import com.cloudmersive.client.invoker.Configuration;
-import com.cloudmersive.client.invoker.auth.ApiKeyAuth;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.io.RandomAccessFile;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.junit.Test;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * @author Karthikeyan on 03/07/20
@@ -17,18 +26,50 @@ import java.io.File;
 public class PdfToTextConverterService {
 
     public String pdfToText(File inputFile) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-        Apikey.setApiKey("adb466ae-d5ee-4cac-9f25-9f18045fd013");
-
-        ConvertDocumentApi apiInstance = new ConvertDocumentApi();
-        String textFormattingMode = "minimizeWhitespace"; // String | Optional; specify how whitespace should be handled when converting PDF to text.  Possible values are 'preserveWhitespace' which will attempt to preserve whitespace in the document and relative positioning of text within the document, and 'minimizeWhitespace' which will not insert additional spaces into the document in most cases.  Default is 'preserveWhitespace'.
-        String result = "";
+        String parsedText = "";
+        PDFParser parser;
         try {
-            result = apiInstance.convertDocumentPdfToTxt(inputFile, textFormattingMode).getTextResult();
-        } catch (ApiException e) {
+            parser = new PDFParser(new RandomAccessFile(inputFile, "r"));
+            parser.parse();
+            COSDocument cosDoc = parser.getDocument();
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            PDDocument pdDoc = new PDDocument(cosDoc);
+            parsedText = pdfStripper.getText(pdDoc);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return result.trim();
+        return parsedText;
+    }
+
+    @Test
+    public void textToPdf() throws IOException {
+        File file = new File("src/main/resources/application-AA031705.pdf");
+        PdfReader reader = new PdfReader(file.getName());
+        System.out.println(reader);
+        ff(file);
+        /*Document pdfDoc = new Document(PageSize.A4);
+        try {
+            PdfWriter.getInstance(pdfDoc, new FileOutputStream(""))
+                    .setPdfVersion(PdfWriter.PDF_VERSION_1_7);
+        } catch (FileNotFoundException | DocumentException e) {
+            e.printStackTrace();
+        }
+        pdfDoc.open();*/
+    }
+
+    public String ff(File inputFile) {
+        String parsedText = "";
+        PDFParser parser;
+        try {
+            parser = new PDFParser(new RandomAccessFile(inputFile, "r"));
+            parser.parse();
+            COSDocument cosDoc = parser.getDocument();
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            PDDocument pdDoc = new PDDocument(cosDoc);
+            parsedText = pdfStripper.getText(pdDoc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return parsedText;
     }
 }
