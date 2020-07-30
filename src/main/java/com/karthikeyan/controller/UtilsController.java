@@ -92,7 +92,7 @@ public class UtilsController {
         String imgText = null;
         try {
             instance.setDatapath("src/main/resources");
-            imgText = instance.doOCR(new File("target/file.jpg"));
+            imgText = instance.doOCR(new File("src/main/resources/file.jpg"));
             System.out.println(imgText);
         } catch (TesseractException e) {
             e.getMessage();
