@@ -3,7 +3,7 @@
     <title>Kar-Utils</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width ,initial-scale=1">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link href="/css/base.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
@@ -12,24 +12,28 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" title="Karthikeyan Thiyagarajan"
-               href="#"><kbd>Kar-Utils</kbd></a>
+               href="#">Kar-Utils</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/dash"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-            <li><a target="_blank" href="https://kar-corona-dashboard.herokuapp.com/"><span class="glyphicon glyphicon-refresh"></span> Corona Dashboard</a></li>
-            <li><a target="_blank" href="https://www.hackerrank.com/karthikeyan10031"><i class='glyphicon glyphicon-console'></i> HackerRank</a></li>
+            <li><a target="_blank" href="https://kar-corona-dashboard.herokuapp.com/"><span
+                    class="glyphicon glyphicon-refresh"></span> Corona Dashboard</a></li>
+            <li><a target="_blank" href="https://www.hackerrank.com/karthikeyan10031"><i
+                    class="glyphicon glyphicon-console"></i> HackerRank</a></li>
             <!--<li><a href="#"><span class="glyphicon glyphicon-home"></span> Login</a></li>
             <li><a href="#"><span class="glyphicon glyphicon-home"></span> About</a></li>-->
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-right"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out &nbsp</a></li>
+            <li class="navbar-right"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out
+                &nbsp</a></li>
+            <li><h5 class="navbar-text"><span class="glyphicon glyphicon-heart text-danger"></span> Karthikeyan
+                Thiyagarajan
+            </h5></li>
         </ul>
     </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <h5 class="navbar-text navbar-right"><span class="glyphicon glyphicon-heart text-danger"></span> Karthikeyan Thiyagarajan
-        </h5>
         <h3 class="sub-heading text-center">QR Code Generator</h3>
     </div>
     

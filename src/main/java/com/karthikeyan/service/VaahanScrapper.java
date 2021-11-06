@@ -1,19 +1,15 @@
 package com.karthikeyan.service;
 
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.HtmlDivision;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.karthikeyan.utils.HelperUtility.*;
 
@@ -53,5 +49,26 @@ public class VaahanScrapper {
 
         System.out.println(a.asXml());
     }
+
+    @Test
+    public void getyss() throws IOException {
+        WebClient client = getDriver(true);
+        String vahanUrl = "https://yssofindia.org/";
+        HtmlPage vaahanPage = client.getPage(vahanUrl);
+        List<Object> byXPath = vaahanPage.getBody().getByXPath("//*[@class='dynamic-quote']");
+        HtmlDivision a = (HtmlDivision) byXPath.get(0);
+
+        HtmlElement h4 = a.getElementsByTagName("h4").get(0);
+        String fullH4 = h4.asText();
+        String date = h4.getElementsByTagName("small").get(0).asText();
+        String heading = date + " - " + fullH4.split(date)[0];
+
+        System.out.println("heading = " + heading);
+
+
+        System.out.println(a.getElementsByTagName("p").get(0).asText());
+        System.out.println(a.getElementsByTagName("p").get(1).asText());
+    }
+
 
 }

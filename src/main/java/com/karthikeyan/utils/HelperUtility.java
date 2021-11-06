@@ -1,17 +1,19 @@
 package com.karthikeyan.utils;
 
+import com.cloudmersive.client.ImageOcrApi;
+import com.cloudmersive.client.invoker.ApiClient;
+import com.cloudmersive.client.invoker.ApiException;
+import com.cloudmersive.client.invoker.Configuration;
+import com.cloudmersive.client.invoker.auth.ApiKeyAuth;
+import com.cloudmersive.client.model.ImageToTextResponse;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTableDataCell;
-import net.sourceforge.tess4j.ITesseract;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.junit.Test;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -116,16 +118,5 @@ public class HelperUtility {
 
     }
 
-    @Test
-    public void dsdsf() {
-        Tesseract instance = new Tesseract();
-        try {
-            instance.setDatapath("src/main/resources");
-            String imgText = instance.doOCR(new File("target/file.jpg"));
-            System.out.println(imgText);
-        } catch (TesseractException e) {
-            e.getMessage();
 
-        }
-    }
 }

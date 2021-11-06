@@ -6,8 +6,6 @@ import com.karthikeyan.service.DiffMatchPatch;
 import com.karthikeyan.service.DiffMatchPatch.Diff;
 import com.karthikeyan.service.PdfToTextConverterService;
 import com.karthikeyan.service.TextMatcher;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -86,19 +84,19 @@ public class UtilsController {
         return ResponseEntity.ok().body(text);
     }
 
-    @GetMapping ("/ocr")
+    /*@GetMapping ("/ocr")
     public String doOCR() {
         Tesseract instance = new Tesseract();
         String imgText = null;
         try {
-            instance.setDatapath("src/main/resources");
+            instance.setDatapath("src/main/resources/tessdata");
             imgText = instance.doOCR(new File("src/main/resources/file.jpg"));
             System.out.println(imgText);
         } catch (TesseractException e) {
             e.getMessage();
         }
         return imgText;
-    }
+    }*/
 
 }
 

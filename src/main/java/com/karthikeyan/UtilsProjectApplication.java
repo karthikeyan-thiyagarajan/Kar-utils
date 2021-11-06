@@ -8,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 @SpringBootApplication
-@EnableScheduling
 public class UtilsProjectApplication {
 
     public static void main(String[] args) {
