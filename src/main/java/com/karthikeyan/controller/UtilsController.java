@@ -6,6 +6,7 @@ import com.karthikeyan.service.DiffMatchPatch;
 import com.karthikeyan.service.DiffMatchPatch.Diff;
 import com.karthikeyan.service.PdfToTextConverterService;
 import com.karthikeyan.service.TextMatcher;
+import com.karthikeyan.utils.HelperUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -97,6 +98,16 @@ public class UtilsController {
         }
         return imgText;
     }*/
+
+    @GetMapping("/rates")
+    public ResponseEntity<String[]> goldRates() {
+        double gRate = HelperUtility.strToDouble(HelperUtility.getGoogleGoldRate()) / 10;
+        String bGold = HelperUtility.getBullionRates().split("/")[0];
+        String bSilver = HelperUtility.getBullionRates().split("/")[1];
+
+        return ResponseEntity.ok().body(new String[]{String.valueOf(gRate), bGold, bSilver});
+    }
+
 
 }
 

@@ -48,7 +48,9 @@
                     &nbsp; PDF Parser</a></li>
                 <li id="4qr4"><a id="qr4" class="tiles" href="#"><span class="glyphicon glyphicon-tasks"></span>
                     &nbsp; Text Matcher</a></li>
-                <li id="5qr5"><a target="_blank" id="qr5" class="tiles"
+                <li id="5qr5"><a id="qr5" class="tiles" href="#"><span class="glyphicon glyphicon-usd"></span>
+                    &nbsp; Rates</a></li>
+                <li id="6qr6"><a target="_blank" id="qr6" class="tiles"
                                  href="https://github.com/karthikeyan-thiyagarajan"><span
                         class="glyphicon glyphicon-user"></span>
                     &nbsp; About</a></li>
@@ -154,9 +156,45 @@
                 <div class="col-md-4 "></div>
             </div>
         </div>
+        
+        <!--GOLD RATE -FRAME-->
+        <div class="col-md-10 hide" id="qr-main4">
+            <br>
+            <div class="col-md-4">
+                <div class="row text-center">
+                    <div class="col">
+                        <div class="counter">
+                            <h1 class="rates" id="b-rate-5"> Fetching ... </h1>
+                            <p class="count-text ">Bullion Gold Rate (10 grams 22 CT)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="row text-center">
+                    <div class="col">
+                        <div class="counter">
+                            <h1 class="rates" id="g-rate-5"> Fetching ... </h1>
+                            <p class="count-text ">Google Gold Rate (10 grams 24 CT)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
     
+            <div class="col-md-4">
+                <div class="row text-center">
+                    <div class="col">
+                        <div class="counter">
+                            <h1 class="rates" id="s-rate-5"> Fetching ... </h1>
+                            <p class="count-text ">Bullion Silver Rate (1 gram)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
     </div>
-
 </div>
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>

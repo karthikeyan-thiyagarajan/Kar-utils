@@ -49,7 +49,7 @@ public class GoldAndSilverScrapper {
             recipients.add("harikrishnanpmk2000@gmail.com");
             recipients.add("kalbalapmk@gmail.com");
             mailer.sendMail(content, recipients.toArray(new String[0]));
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

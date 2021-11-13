@@ -1,11 +1,5 @@
 package com.karthikeyan.utils;
 
-import com.cloudmersive.client.ImageOcrApi;
-import com.cloudmersive.client.invoker.ApiClient;
-import com.cloudmersive.client.invoker.ApiException;
-import com.cloudmersive.client.invoker.Configuration;
-import com.cloudmersive.client.invoker.auth.ApiKeyAuth;
-import com.cloudmersive.client.model.ImageToTextResponse;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -14,11 +8,11 @@ import com.gargoylesoftware.htmlunit.html.HtmlTableDataCell;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.util.StringUtils;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -26,6 +20,26 @@ import java.io.IOException;
  */
 
 public class HelperUtility {
+
+    private HelperUtility() {
+    }
+
+    /*public static String doOCR(File inputFile) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("adb466ae-d5ee-4cac-9f25-9f18045fd013");
+
+        ImageToTextResponse result = null;
+        ImageOcrApi apiInstance = new ImageOcrApi();
+        try {
+            result = apiInstance.imageOcrPost(inputFile, "Advanced", "English (ENG)", "Auto");
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ImageOcrApi#imageOcrPost");
+            e.printStackTrace();
+        }
+        return result.getTextResult();
+    }*/
 
     public static int processingOCR(String text) {
         System.out.println("-----" + text.replace("\n", "") + "-----");
@@ -52,23 +66,6 @@ public class HelperUtility {
         return result;
     }
 
-    /*public static String doOCR(File inputFile) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-        Apikey.setApiKey("adb466ae-d5ee-4cac-9f25-9f18045fd013");
-
-        ImageToTextResponse result = null;
-        ImageOcrApi apiInstance = new ImageOcrApi();
-        try {
-            result = apiInstance.imageOcrPost(inputFile, "Advanced", "English (ENG)", "Auto");
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling ImageOcrApi#imageOcrPost");
-            e.printStackTrace();
-        }
-        return result.getTextResult();
-    }*/
-
     public static WebClient getDriver(boolean javaScriptEnabled) {
         WebClient client = new WebClient(BrowserVersion.CHROME);
         client.getOptions().setCssEnabled(false);
@@ -82,28 +79,37 @@ public class HelperUtility {
         return client;
     }
 
-    public static String getGoogleGoldRate() throws IOException {
-        Document doc;
-        doc = Jsoup.connect("https://www.google.com/search?q=madurai+gold+rate").get();
-        System.out.println("doc.text() = " + doc.text());
-        Elements links = doc.getElementsByClass("vlzY6d");
-        String goldRate = links.text();
-        System.out.println("Gold Rate = " + goldRate);
-        return goldRate;
+    public static String getGoogleGoldRate() {
+        try {
+            Document doc;
+            doc = Jsoup.connect("https://www.google.com/search?q=madurai+gold+rate").get();
+            Elements links = doc.getElementsByClass("vlzY6d");
+            String goldRate = links.text();
+            System.out.println("Gold Rate = " + goldRate);
+            return goldRate.replace(" Indian Rupee","");
+        } catch (IOException e) {
+            return "";
+        }
     }
 
-    public static String getBullionRates(WebClient client) throws IOException {
-        String gold, silver;
-        String bullion = "http://www.kjpl.in/";
-        HtmlPage bullionPage = client.getPage(bullion);
-        HtmlTableDataCell goldRate = bullionPage.getBody().getFirstByXPath("//*[@class='gold']");
-        HtmlTableDataCell silverRate = bullionPage.getBody().getFirstByXPath("//*[@class='silver']");
-        gold = "Bullion " + goldRate.asText();
-        silver = "Bullion " + silverRate.asText();
+    public static String getBullionRates(WebClient client) {
+        try {
+            String bullion = "http://www.kjpl.in/";
+            HtmlPage bullionPage = client.getPage(bullion);
+            HtmlTableDataCell goldRate = bullionPage.getBody().getFirstByXPath("//*[@class='gold']");
+            HtmlTableDataCell silverRate = bullionPage.getBody().getFirstByXPath("//*[@class='silver']");
+            System.out.println("Bullion " + goldRate.getTextContent());
+            System.out.println("Bullion " + silverRate.getTextContent());
 
-        System.out.println(gold);
-        System.out.println(silver);
-        return gold + " /gram <br>" + silver + " /gram";
+            return goldRate.getTextContent().replace("GOLD ","")+"/"+silverRate.getTextContent().replace("SILVER ","");
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
+    public static String getBullionRates() {
+        WebClient client = getDriver(false);
+        return getBullionRates(client);
     }
 
     private static int expressionSolver(String text) {
@@ -117,6 +123,16 @@ public class HelperUtility {
         }
 
     }
+    public static double strToDouble(String val) {
+        double v = 0;
+        if (StringUtils.hasText(val)) {
+            v = Double.parseDouble(val.replace(",",""));
+        }
+        return v;
+    }
 
-
+    public static void main(String[] args) {
+        HelperUtility.getBullionRates();
+//        HelperUtility.getGoogleGoldRate();
+    }
 }

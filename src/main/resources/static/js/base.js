@@ -5,8 +5,8 @@ $( document ).ready(function() {
          $('.tiles').each(function () {
              idArray.push(this.id);
          });
-    var ids= ["qr-main","qr-main1","qr-main2","qr-main3"];
-    var headings= ["QR Code Generator","Text Difference Checker","PDF to Text Converter","Text Matcher"];
+    var ids= ["qr-main","qr-main1","qr-main2","qr-main3","qr-main4"];
+    var headings= ["QR Code Generator","Text Difference Checker","PDF to Text Converter","Text Matcher","Gold and Silver Rates"];
        for (var i = 0; i < idArray.length; i++) {
             if(idArray[i] === this.id){
                 $("#"+ids[i]+"").removeClass("hide");
@@ -38,6 +38,26 @@ var name =  $('#qr-data').val() != "" ? $('#qr-data').val() : "empty";
   	    success: function(response) {
   	    document.getElementById("qr-image").src = "data:image/png;base64," + response;
         $btn.button('reset')
+         },
+        error: function(response) {
+            console.log(response);
+        }
+  	});
+});
+
+$("#qr5").click(function(e){
+
+  $.ajax({
+  	    type: 'GET',
+  	    headers: {
+  	        'Content-Type': 'application/json'
+  	    },
+  	    url: "/rates",
+  	    data: "",
+  	    success: function(response) {
+  	    $("#b-rate-5").text(response[1]);
+  	    $("#g-rate-5").text(response[0]);
+  	    $("#s-rate-5").text(response[2]);
          },
         error: function(response) {
             console.log(response);

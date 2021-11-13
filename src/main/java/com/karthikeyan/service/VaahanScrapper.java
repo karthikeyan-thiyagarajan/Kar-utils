@@ -4,14 +4,13 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
-import static com.karthikeyan.utils.HelperUtility.*;
+import static com.karthikeyan.utils.HelperUtility.getDriver;
+import static com.karthikeyan.utils.HelperUtility.processingOCR;
 
 /**
  * @author Karthikeyan on 27/07/20
@@ -20,7 +19,6 @@ import static com.karthikeyan.utils.HelperUtility.*;
 public class VaahanScrapper {
 
 
-    @Test
     public void getVaahan() throws IOException {
         WebClient client = getDriver(true);
         String vahanUrl = "https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml";
@@ -50,7 +48,6 @@ public class VaahanScrapper {
         System.out.println(a.asXml());
     }
 
-    @Test
     public void getyss() throws IOException {
         WebClient client = getDriver(true);
         String vahanUrl = "https://yssofindia.org/";
