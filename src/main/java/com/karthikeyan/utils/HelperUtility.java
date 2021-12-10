@@ -88,6 +88,7 @@ public class HelperUtility {
             Document doc;
             List<String> fList = new ArrayList<>();
             doc = Jsoup.connect("https://www.google.com/search?q=madurai+gold+rate").userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36").get();
+            System.out.println(doc);
             List<String> list = regex(doc.body().html());
             Elements links = doc.getElementsByClass("vlzY6d");
             String goldRate = links.text();
