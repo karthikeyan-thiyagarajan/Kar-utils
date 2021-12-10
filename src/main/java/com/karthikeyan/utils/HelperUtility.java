@@ -116,7 +116,7 @@ public class HelperUtility {
 
             HtmlPage bullionPage = client.getPage(bullion);
             HtmlPage bullionPage1 = client.getPage(bullion1);
-            System.out.println("bullionPage1 = " + bullionPage1);
+            System.out.println("bullionPage1 = " + bullionPage1.getBody().getTextContent());
             HtmlTableDataCell goldRate = bullionPage.getBody().getFirstByXPath("//*[@class='gold']");
             HtmlTableDataCell silverRate = bullionPage.getBody().getFirstByXPath("//*[@class='silver']");
             System.out.println("Bullion " + goldRate.getTextContent());
