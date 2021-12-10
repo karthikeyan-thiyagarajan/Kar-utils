@@ -14,6 +14,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Karthikeyan on 27/07/20
@@ -67,7 +71,7 @@ public class HelperUtility {
     }
 
     public static WebClient getDriver(boolean javaScriptEnabled) {
-        WebClient client = new WebClient(BrowserVersion.CHROME);
+        WebClient client = new WebClient(BrowserVersion.BEST_SUPPORTED);
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(javaScriptEnabled);
         client.getOptions().setUseInsecureSSL(true);
@@ -82,14 +86,24 @@ public class HelperUtility {
     public static String getGoogleGoldRate() {
         try {
             Document doc;
+            List<String> fList = new ArrayList<>();
             doc = Jsoup.connect("https://www.google.com/search?q=madurai+gold+rate").get();
+            List<String> list = regex(doc.body().html());
             Elements links = doc.getElementsByClass("vlzY6d");
             String goldRate = links.text();
             System.out.println("Gold Rate = " + goldRate);
-            return goldRate.replace(" Indian Rupee","");
+            fList.add(goldRate.replace(" Indian Rupee", "").replace(",","").split("\\.")[0]);
+            fList.add(list.get(list.size() - 1));
+            fList.add(list.get(list.size() - 2));
+            fList.add(list.get(list.size() - 3));
+            fList.add(list.get(list.size() - 4));
+            fList.add(list.get(list.size() - 5));
+            fList.forEach(System.out::println);
+
         } catch (IOException e) {
             return "";
         }
+        return "";
     }
 
     public static String getBullionRates(WebClient client) {
@@ -101,7 +115,7 @@ public class HelperUtility {
             System.out.println("Bullion " + goldRate.getTextContent());
             System.out.println("Bullion " + silverRate.getTextContent());
 
-            return goldRate.getTextContent().replace("GOLD ","")+"/"+silverRate.getTextContent().replace("SILVER ","");
+            return goldRate.getTextContent().replace("GOLD ", "") + "/" + silverRate.getTextContent().replace("SILVER ", "");
         } catch (IOException e) {
             return "";
         }
@@ -123,16 +137,29 @@ public class HelperUtility {
         }
 
     }
+
     public static double strToDouble(String val) {
         double v = 0;
         if (StringUtils.hasText(val)) {
-            v = Double.parseDouble(val.replace(",",""));
+            v = Double.parseDouble(val.replace(",", ""));
         }
         return v;
     }
 
+    public static List<String> regex(String val) {
+        List<String> list = new ArrayList<>();
+        Pattern pattern = Pattern.compile("\\[\\[[\\d]{5}");
+        Matcher m = pattern.matcher(val);
+        while (m.find()) {
+            list.add(m.group().replaceAll("\\[", ""));
+        }
+        return list;
+    }
+
+
     public static void main(String[] args) {
-        HelperUtility.getBullionRates();
-//        HelperUtility.getGoogleGoldRate();
+//        HelperUtility.getBullionRates();
+        HelperUtility.getGoogleGoldRate();
+//        HelperUtility.regex();
     }
 }
