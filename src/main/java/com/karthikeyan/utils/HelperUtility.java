@@ -92,13 +92,15 @@ public class HelperUtility {
             Elements links = doc.getElementsByClass("vlzY6d");
             String goldRate = links.text();
             System.out.println("Gold Rate = " + goldRate);
-            fList.add(goldRate.replace(" Indian Rupee", "").replace(",","").split("\\.")[0]);
-            fList.add(list.get(list.size() - 1));
-            fList.add(list.get(list.size() - 2));
-            fList.add(list.get(list.size() - 3));
-            fList.add(list.get(list.size() - 4));
-            fList.add(list.get(list.size() - 5));
-            fList.forEach(System.out::println);
+            if (StringUtils.hasText(goldRate)) {
+                fList.add(goldRate.replace(" Indian Rupee", "").replace(",","").split("\\.")[0]);
+                fList.add(list.get(list.size() - 1));
+                fList.add(list.get(list.size() - 2));
+                fList.add(list.get(list.size() - 3));
+                fList.add(list.get(list.size() - 4));
+                fList.add(list.get(list.size() - 5));
+                fList.forEach(System.out::println);
+            }
 
         } catch (IOException e) {
             return "";
